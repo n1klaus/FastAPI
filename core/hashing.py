@@ -13,6 +13,6 @@ class Hasher:
         return pwd_context.verify(plain_password, hashed_password)
     
     @staticmethod
-    def get(plain_password):
+    def get_password_hash(plain_password):
         """Returns hashed form of the plain password from the string"""
         return pwd_context.hash(plain_password)

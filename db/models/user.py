@@ -2,9 +2,9 @@
 
 from sqlalchemy import Column, Boolean, Integer, String
 from sqlalchemy.orm import relationship
-from db.base_class import Base
+from db.base import BaseClass
 
-class User(Base):
+class User(BaseClass):
     """User Class"""
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, nullable=False, unique=True, index=True)
