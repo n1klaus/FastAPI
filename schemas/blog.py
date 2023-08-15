@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 from typing import Optional
-from pydantic import BaseModel, root_validator
+from pydantic import root_validator
+from sqlmodel import SQLModel
 from datetime import date
 
-class BlogCreate(BaseModel):
+class BlogCreate(SQLModel):
     """Schema for creating a blog"""
     title: str
     slug: str
@@ -16,10 +17,8 @@ class BlogCreate(BaseModel):
             values['slug'] = values.get('title').replace(" ", "-").lower()
         return values
     
-class BlogView(BaseModel):
+class BlogView(SQLModel):
     title: str
     content: Optional[str]
     created_at: date
-
-    class Config():
-        orm_mode = True
+    updated_at: date

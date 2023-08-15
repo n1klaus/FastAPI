@@ -16,3 +16,8 @@ def retrieve_blog(id: int, db: Session):
     """Retrieves an existing blog"""
     blog = db.query(Blog).filter(Blog.id == id).first()
     return blog
+
+def list_blogs(db: Session):
+    """Retrives all existing blogs"""
+    blogs = db.query(Blog).filter(Blog.is_active==True).all()
+    return blogs
