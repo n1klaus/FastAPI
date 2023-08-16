@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from db.session import get_db
-from schemas.blog import BlogCreate, BlogView
-from db.repository.blog import create_new_blog, retrieve_blog, list_blogs
+from schemas.blog import BlogCreate, BlogView, BlogUpdate
+from db.repository.blog import create_new_blog, retrieve_blog, list_blogs, update_blog
 
 router = APIRouter()
 
@@ -29,3 +29,11 @@ def get_all_blogs(db: Session = Depends(get_db)):
     """Returns a list if all blogs"""
     blogs = list_blogs(db=db)
     return blogs
+
+@router.put("/blogs/{id}", response_model=BlogView)
+def update_a_blog(id: int, blog: BlogUpdate, db: Session = Depends(get_db)):
+    """"""
+    blog = update_blog(id=id, blog=blog, author_id=1, db=db)
+    if not blog:
+        raise HTTPException(detail=f"Blog with ID {id} does not exist", status_code=status.HTTP_404_NOT_FOUND)
+    return blog

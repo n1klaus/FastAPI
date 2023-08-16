@@ -18,7 +18,13 @@ class BlogCreate(SQLModel):
         return values
     
 class BlogView(SQLModel):
+    """Schema for viewing a blog"""
+    id: int
     title: str
     content: Optional[str]
     created_at: date
     updated_at: date
+
+class BlogUpdate(BlogCreate):
+    """Schema for updating a blog"""
+    ...
