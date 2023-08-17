@@ -32,3 +32,12 @@ def update_blog(id: int, blog: BlogUpdate, author_id: int, db: Session):
     db.add(blog_in_db)
     db.commit()
     return blog_in_db
+
+def delete_blog(id: int, author_id: int, db: Session):
+    """"""
+    blog_in_db = db.query(Blog).filter(Blog.id == id)
+    if not blog_in_db.first():
+        {"error": "Could not find blog with given id {id}"}
+    blog_in_db.delete()
+    db.commit()
+    return {"msg": f"Successfully deleted blog with id {id}"}

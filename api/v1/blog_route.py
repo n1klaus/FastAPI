@@ -6,7 +6,7 @@ from typing import List
 
 from db.session import get_db
 from schemas.blog import BlogCreate, BlogView, BlogUpdate
-from db.repository.blog import create_new_blog, retrieve_blog, list_blogs, update_blog
+from db.repository.blog import create_new_blog, retrieve_blog, list_blogs, update_blog, delete_blog
 
 router = APIRouter()
 
@@ -37,3 +37,11 @@ def update_a_blog(id: int, blog: BlogUpdate, db: Session = Depends(get_db)):
     if not blog:
         raise HTTPException(detail=f"Blog with ID {id} does not exist", status_code=status.HTTP_404_NOT_FOUND)
     return blog
+
+@router.delete("/blogs/{id}")
+def delete_a_blog(id: int, db: Session = Depends(get_db)):
+    """"""
+    message = delete_blog(id=id, author_id=1, db=db)
+    if "error" in message:
+        raise HTTPException(detail=message["error"], status_code=status.HTTP_404_NOT_FOUND)
+    return {"msg": f"Successfully deleted blog with id {id}"}
