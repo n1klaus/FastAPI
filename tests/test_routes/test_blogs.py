@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-
 """"""
-
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from tests.utils.blog import create_test_blog
+
 
 def test_create_blog(client: TestClient, session: Session):
     """"""
