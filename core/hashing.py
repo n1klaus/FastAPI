@@ -15,4 +15,4 @@ class Hasher:
     @staticmethod
     def get_password_hash(plain_password):
         """Returns hashed form of the plain password from the string"""
-        return pwd_context.hash(plain_password)
+        return pwd_context.hash(secret=plain_password)

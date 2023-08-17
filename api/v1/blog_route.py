@@ -6,6 +6,8 @@ from typing import List
 
 from db.session import get_db
 from schemas.blog import BlogCreate, BlogView, BlogUpdate
+from db.models.user import User
+from core.security import get_current_user
 from db.repository.blog import create_new_blog, retrieve_blog, list_blogs, update_blog, delete_blog
 
 router = APIRouter()
@@ -31,17 +33,17 @@ def get_all_blogs(db: Session = Depends(get_db)):
     return blogs
 
 @router.put("/blogs/{id}", response_model=BlogView)
-def update_a_blog(id: int, blog: BlogUpdate, db: Session = Depends(get_db)):
+def update_a_blog(id: int, blog: BlogUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """"""
-    blog = update_blog(id=id, blog=blog, author_id=1, db=db)
+    blog = update_blog(id=id, blog=blog, author_id=current_user.id, db=db)
     if not blog:
         raise HTTPException(detail=f"Blog with ID {id} does not exist", status_code=status.HTTP_404_NOT_FOUND)
     return blog
 
 @router.delete("/blogs/{id}")
-def delete_a_blog(id: int, db: Session = Depends(get_db)):
+def delete_a_blog(id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """"""
-    message = delete_blog(id=id, author_id=1, db=db)
+    message = delete_blog(id=id, author_id=current_user.id, db=db)
     if "error" in message:
         raise HTTPException(detail=message["error"], status_code=status.HTTP_404_NOT_FOUND)
     return {"msg": f"Successfully deleted blog with id {id}"}

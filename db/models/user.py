@@ -2,7 +2,8 @@
 
 from sqlalchemy import Column, Boolean, Integer, String
 from sqlalchemy.orm import relationship
-from db.base import BaseClass
+
+from db.models.base_class import BaseClass
 
 class User(BaseClass):
     """User Class"""

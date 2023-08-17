@@ -3,7 +3,7 @@
 from sqlalchemy import Column, Integer, Text, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
-from db.base import BaseClass
+from db.models.base_class import BaseClass
 
 class Blog(BaseClass):
     """Blog class"""
